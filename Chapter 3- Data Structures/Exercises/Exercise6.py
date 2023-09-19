@@ -1,15 +1,18 @@
 # -*- coding: utf-8 -*-
 """
-Shrinking Guest List
+IF CONDITION
 """
-guest = ["Carl Sagan", "God", "Vincent Van Gogh"]
-print("It has come to my attention that my new dinner table will not arrive today. As such there will be a change in guests.")
 
-print("Removed guests:", guest.pop(1))
-print("Updated guest list:", guest)
-print(guest[0], "your status as a guest has not changed and we welcome you to dinner.")
-print(guest[1], "your status as a guest has not changed and we welcome you to dinner.")
-
-del guest
-#error, list is empty
-print(guest)
+#AGE INPUT
+age=int(input("Please enter your age "))
+if age<=4:
+    print("You're too young mate, get your parents.")
+else:
+    print("Welcome, kid.")
+    
+print("\n")
+a=int(input("Enter a number to check for even or odd "))
+if (a%2==0):
+    print(a, "is an even number")
+else:
+    print(a, "is an odd number")
