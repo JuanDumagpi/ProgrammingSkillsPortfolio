@@ -2,7 +2,7 @@
 """
 Stages of Life
 """
-
+#this lets the user type in a number for the age variable
 age = int(input("Please enter your age: "))
 
 if age<2: #if the age is less than 2, print below message
