@@ -2,6 +2,7 @@
 """
 Favorite Fruits
 """
+#makes a variable for a list of fruits
 favorite_fruits = ["Apple", "Strawberry", "Lemon"]
 
 #Checks if this fruit is in the list. Since it is true, prints the message below.
