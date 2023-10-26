@@ -3,7 +3,7 @@
 Dictionaries
 Exercise 1: Person
 """
-#this is the dictionary and keys
+#this is the dictionary, which lets us set a list of data with a key:value
 Thancred_Waters = {
     "First_Name": "Thancred",
         
