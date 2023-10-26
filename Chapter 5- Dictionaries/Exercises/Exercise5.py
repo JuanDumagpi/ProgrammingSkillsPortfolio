@@ -35,6 +35,6 @@ pet3 = {
 petlist = [pet1, pet2, pet3]
 
 
-#this loops a message for each dictionary in the list
+#this loops a message for each dictionary in the list showing the all the keys:values in the dictionary
 for x in petlist:
     print(x)
