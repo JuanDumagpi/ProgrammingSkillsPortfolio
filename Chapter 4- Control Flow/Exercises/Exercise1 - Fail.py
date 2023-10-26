@@ -8,5 +8,5 @@ fail
 alien_color = "blue"
 
 #this tests if the alien color is green and if true, displays a message
-if alien_color == "green":
-    print ("You obtain 5 points")
+if alien_color == "green": #so, if the color of the alien's blood is green
+    print ("You obtain 5 points") #it will print this message
