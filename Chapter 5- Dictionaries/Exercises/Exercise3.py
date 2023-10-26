@@ -28,5 +28,6 @@ glossary = {
     }
 
 #loop that checks the 'glossary' dictionary and prints each key and value formatted in a certain way
+#x being the key variable and y being the value variable
 for x,y in glossary.items():
     print(x, "\n \t", y, "\n")
