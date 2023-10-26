@@ -3,7 +3,7 @@
 Dictionaries
 Exercise 4: Rivers
 """
-
+#variable for the dictionary of rivers, with the key being the river's name and the value being where their location is
 rivers = {
     "Amazon": "Brazil",
         
