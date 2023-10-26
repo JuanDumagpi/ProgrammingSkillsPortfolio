@@ -12,6 +12,6 @@ Since the result is a decimal, used the round() function to convert it to a whol
 """
 USBs=round(GirlMoney/USBPrice)
 
-#Prints variables as well as the answer
+#Prints variables as well as the answer as a statement.
 print("If the girl has £" ,GirlMoney ,"and each USB stick costs £" ,USBPrice 
       ,", then she can buy" ,USBs ,"USB sticks")
