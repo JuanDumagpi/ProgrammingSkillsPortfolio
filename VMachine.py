@@ -3,60 +3,36 @@
 Vending Machiiiiine!
 """
 
-C1 ={
-     "Code" : "C1",
-     "Item" : "Coke",
-     "Price" : 1,
-     "Stock" : 1,
-     }
-C2 ={
-     "Code" : "C2",
-     "Item" : "Sprite",
-     "Price" : 1,
-     "Stock" : 15,
-     }
-C3 ={
-     "Code" : "C3",
-     "Item" : "Fanta",
-     "Price" : 1,
-     "Stock" : 10,
-     }
-H1 ={
-     "Code" : "H1",
-     "Item" : "Coffee",
-     "Price" : 2,
-     "Stock" : 20,
-     }
-H2 ={
-     "Code" : "H2",
-     "Item" : "Tea",
-     "Price" : 3,
-     "Stock" : 5,
-     }
-H3 ={
-     "Code" : "H3",
-     "Item" : "Hot Chocolate",
-     "Price" : 2,
-     "Stock" : 5,
-     }
-
-itemlist = [C1, C2, C3, H1, H2, H3]
+vm = {"C1":"Coke", "C2":"Sprite", "C3":"Fanta", "H1":"Coffee", "H2":"Tea", "H3":"Hot Chocolate", "S1":"Kitkat", "S2":"Chips", "S3":"Snickers"} #Dictionary for the vending machine stock with Code:Item Name
+prices = {"Coke":1, "Sprite":1, "Fanta":1, "Coffee":2, "Tea":3, "Hot Chocolate":2, "Kitkat":1, "Chips":2, "Snickers":2} #Dictionary for prices with Item Name:Price
+s = {"Coke":25, "Sprite":25, "Fanta":20, "Coffee":15, "Tea":20, "Hot Chocolate":10, "Kitkat":10, "Chips":2, "Snickers":8}#Dictionary for the vending machine's stock, with Item Name:Stock
 money = 0
 
 #/////Inventory Function///
 #This will show the current stock
 def inventory():
-    for item in itemlist:
-        if item.get("Stock") == 0:
-            itemlist.remove(item)
-    for item in itemlist:
-        print ("Code: ", item.get("Code"), " - ", "$",item.get("Price"), " ", item.get("Item"), " -", " Stock: ", item.get("Stock"), sep='')
-    print("\n")
+    #Dictionary for the inventory, along with the info in string format
+    inventory={ "C1":{"Price":"$1","Name":"Coke"},
+                "C2":{"Price":"$1","Name":"Sprite"},
+                "C3":{"Price":"$1","Name":"Fanta"},
+                "H1":{"Price":"$2","Name":"Coffee"},
+                "H2":{"Price":"$3","Name":"Tea"},
+                "H3":{"Price":"$2","Name":"Hot Chocolate"},
+                "S1":{"Price":"$1","Name":"KitKat"},
+                "S2":{"Price":"$2","Name":"Chips"},
+                "S3":{"Price":"$2","Name":"Snickers"},
+                }
+    print ("~~~~Here's what's available:~~~~")
+    for code, info in inventory.items():
+        print("\n", code, end=" ")
+        
+        for key in info:
+            print(key + ':', info[key], end=" ")
+    print ("\n")
+    print ("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
 #/////Inventory Function///
 
-
-
-#/////Money Function///
+#/////Money Function/////
 def creditsadd():
     #very important, this sets the variable to global so we can affect outside variables
     global money
@@ -73,21 +49,51 @@ def creditsadd():
     except:
         print("//// Please enter a valid amount. ////")
         creditsadd()
-    print ("$",moneyadd, "added, current credits: $",money, sep="")
-#/////Money Function///
+    print ("$",moneyadd, " added, current credits: $",money, sep="")
+#/////Money Function/////
 
+#/////Buy Function/////
+def buy():
+    global money
+    buyloop = True
+    inventory() #calls the inventory function which shows the items available for purchase
+    while buyloop == True: #buy function loop
+        item = input("Item Code here:")  #lets you input the item code
+        if item in vm: #input code is checked if it's in the vending machine's list of items
+            itemname = vm[item]
+            if s[itemname] > 0: #checks if the item has stock
+                if money - prices[itemname] >= 0: #checks if you can afford the item
+                    print ("Dispensing", vm[item]) #dispenses the item after the above checks are true
+                    money -= prices[itemname] #deducts money based on the item's price
+                    print("Available funds: $", money) #shows the available remaining funds
+                    s[itemname] += -1 #deducts stock
+                    choice=input("Would you like to purchase something else? y/n: ") #lets the user input a choice to buy again
+                    if choice == "y":
+                        buyloop = True
+                    else:
+                        buyloop = False
+                else:
+                    print("Insufficient funds, please add more, and try again.")#error if there is less funds than the price
+                    buyloop = False
+            else:
+                print("Out of stock, please try again.")#error if there is no remaining stock for the code given
+                buyloop = False
+        else:
+                print("Invalid code, please try again.")#error if user inputs an invalid code
+                buyloop = False
+#/////Buy Function/////
 
 #/////Main Menu/////
 def mainmenu():
     menuloop = True
     choice = 0
     global money
-    while menuloop == True:
+    while menuloop == True: #creates a loop for the main menu
         print ("1 Insert Credits - Currently: $",money, sep="")
         print ("2 Purchase Items")
         print ("3 Done")
         print("\n")
-        try:
+        try: #TRY here is important since the choice HAS to be an integer, if the the user uses a non integer, it will trigger an error, which we can bypass with the except statement
             choice = int(input("Please select an option: "))
             print ("\n")
             if choice == 3: #this gives the change if any, and exits the program
@@ -99,37 +105,15 @@ def mainmenu():
                 else:
                     print ("See you again!")
                     break
-            elif choice == 2: #shows the available items and lets the user input the code for what they want
-                print ("~~~~Here's what's available:~~~~ \n")
-                inventory()
-                buy=input("Select item: ")
-                print("\n")
-                for item in itemlist: #goes through each dictionary looking for the code
-                    if buy == item.get("Code"):
-                        buy = item
-                        price = buy.get("Price") #gets the price value from its key
-                        if money < price: #checks if you have enough money
-                            print ("//// Insufficient funds ////")
-                            break
-                        else:
-                            print ("~~~~~~~~~~Dispensing~~~~~~~~~~")
-                            print ("~~Enjoy your ", buy.get("Item"),"!~~", sep="")
-                            buy["Stock"] -= 1
-                            money -= price
-                            print ("Remaining credits: ", "$", money, sep="")
-                            print ("\n")
-                            print ("Thank you for your purchase!")
+            elif choice == 2: #calls the buy function and shows the available items and lets the user input the code for what they want
+                buy()
             elif choice == 1: #calls the function to add more money
                 creditsadd()
             else:
                 print("//// Invalid option, please try again. ////")
-        except:
+        except:#this will catch the error and print the below statement
             print("//// Invalid option, please try again. ////")
         print("\n")
 #/////Main Menu/////
-print ("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
-print ("|            Welcome to my           |")
-print ("|           Vending Machine          |")
-print ("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
-inventory()
+
 mainmenu()
